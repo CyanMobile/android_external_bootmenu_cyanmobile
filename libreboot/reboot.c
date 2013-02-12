@@ -110,6 +110,12 @@ int reboot_wrapper(const char* reason) {
             system(SH_RM " '" BOARD_BOOTMODE_CONFIG_FILE "'");
             pr_debug("allowing stock recovery reboot\n");
 #endif
+        } else if ( 0 == strncmp(reason,"safemodes",9) ) {
+
+            ret = fputs("safemodes", config);
+            pr_debug("%s->safemodes " BOARD_BOOTMODE_CONFIG_FILE " (%d)\n", reason, ret);
+            need_clear_reason = 1;
+
         } else {
             pr_debug("unhandled reason:%s\n", reason);
         }
